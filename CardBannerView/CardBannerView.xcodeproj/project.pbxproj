@@ -14,6 +14,7 @@
 		0496C91F25A3042100CC56D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0496C91E25A3042100CC56D3 /* Assets.xcassets */; };
 		0496C92225A3042100CC56D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0496C92025A3042100CC56D3 /* LaunchScreen.storyboard */; };
 		0496C92525A3042100CC56D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496C92425A3042100CC56D3 /* main.m */; };
+		0496C95F25A3187E00CC56D3 /* HBCardBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496C95E25A3187D00CC56D3 /* HBCardBannerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,9 @@
 		0496C92125A3042100CC56D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0496C92325A3042100CC56D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0496C92425A3042100CC56D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0496C95D25A3187D00CC56D3 /* HBCardBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBCardBannerView.h; sourceTree = "<group>"; };
+		0496C95E25A3187D00CC56D3 /* HBCardBannerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBCardBannerView.m; sourceTree = "<group>"; };
+		0496C96125A31C9A00CC56D3 /* HBCardBannerModelProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBCardBannerModelProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 		0496C91125A3041F00CC56D3 /* CardBannerView */ = {
 			isa = PBXGroup;
 			children = (
+				0496C92C25A3112B00CC56D3 /* HBCardBannerView */,
 				0496C91225A3042000CC56D3 /* AppDelegate.h */,
 				0496C91325A3042000CC56D3 /* AppDelegate.m */,
 				0496C91525A3042000CC56D3 /* SceneDelegate.h */,
@@ -74,6 +79,32 @@
 				0496C92425A3042100CC56D3 /* main.m */,
 			);
 			path = CardBannerView;
+			sourceTree = "<group>";
+		};
+		0496C92C25A3112B00CC56D3 /* HBCardBannerView */ = {
+			isa = PBXGroup;
+			children = (
+				0496C93125A3117400CC56D3 /* Models */,
+				0496C93025A3116F00CC56D3 /* Views */,
+			);
+			path = HBCardBannerView;
+			sourceTree = "<group>";
+		};
+		0496C93025A3116F00CC56D3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0496C95D25A3187D00CC56D3 /* HBCardBannerView.h */,
+				0496C95E25A3187D00CC56D3 /* HBCardBannerView.m */,
+				0496C96125A31C9A00CC56D3 /* HBCardBannerModelProtocol.h */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0496C93125A3117400CC56D3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,6 +180,7 @@
 				0496C91425A3042000CC56D3 /* AppDelegate.m in Sources */,
 				0496C92525A3042100CC56D3 /* main.m in Sources */,
 				0496C91725A3042000CC56D3 /* SceneDelegate.m in Sources */,
+				0496C95F25A3187E00CC56D3 /* HBCardBannerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
