@@ -7,7 +7,9 @@
 
 #import "HBCardSlideDataSource.h"
 #import "HBCardSlideCell.h"
-
+#import "HBCardCollectionViewLayout.h"
+#import <objc/runtime.h>
+#import "NestElement.h"
 
 /** 设置tags状态 */
 typedef NS_ENUM(NSInteger, NearestPointDirection) {
@@ -17,34 +19,9 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
 };
 
 
-@implementation HBCardSlideCellSize
 
-- (instancetype)initWithNormal:(CGFloat)normalWidth center:(CGFloat)centerWidth
-{
-    self = [super init];
-    if (self) {
-        self.normalWidth = normalWidth;
-        self.centerWidth = centerWidth;
-        self.normalHeight = self.normalHeight == 0 ? normalWidth : self.normalHeight;
-        self.centerHeight = self.centerHeight == 0 ? centerWidth : self.centerHeight;
-    }
-    return self;
-}
 
-- (instancetype)initWithNormal:(CGFloat)normalWidth center:(CGFloat)centerWidth normalHeight:(CGFloat)normalHeight centerHeight:(CGFloat)centerHeight {
-    self = [super init];
-    if (self) {
-        self.normalWidth = normalWidth;
-        self.centerWidth = centerWidth;
-        self.normalHeight = normalHeight;
-        self.centerHeight = centerHeight;
-    }
-    return self;
-}
-
-@end
-
-@interface HBCardSlideDataSource ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface HBCardSlideDataSource ()
 
 /** 滑动速度*/
 @property (nonatomic, assign) CGFloat scrollVelocity;
@@ -52,11 +29,6 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
 /** 下标选择*/
 @property (nonatomic, assign) NSInteger selectedItem;
 
-/** 选择*/
-@property (nonatomic, weak) id <HBCardSlideDataDelegate>delegate;
-
-/** 模型*/
-@property (nonatomic, strong) NSArray *items;
 
 /** 触觉反馈器*/
 @property (nonatomic, strong) UISelectionFeedbackGenerator *selectionFG;
@@ -95,17 +67,25 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
     [self reloadCell:[NSIndexPath indexPathForRow:previousSelectIndex inSection:0] selectState:false];
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout nonnull CGPoint *)targetContentOffset {
     self.scrollVelocity = velocity.x;
     
     if (self.scrollVelocity == 0) {
-//        targetContentOffset =
+        CGPoint targetOffset = [self offect:targetContentOffset->x direction:NearestPointDirectionAny];
+        targetContentOffset = &targetOffset;
+    }
+    if (self.scrollVelocity < 0) {
+        CGPoint targetOffset = [self offect:targetContentOffset->x direction:NearestPointDirectionLeft];
+        targetContentOffset = &targetOffset;
+    } else if (self.scrollVelocity > 0) {
+        CGPoint targetOffset = [self offect:targetContentOffset->x direction:NearestPointDirectionRight];
+        targetContentOffset = &targetOffset;
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self reloadCell:[NSIndexPath indexPathForRow:self.selectedItem inSection:0] selectState:YES];
-    
+    [self.selectionFG selectionChanged];
     [self.delegate cellSelected:self.selectedItem];
 }
 
@@ -120,7 +100,28 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
 
 /** 计算离中心最近的Cell*/
 - (CGPoint)offect:(CGFloat)centerX direction:(NearestPointDirection)direction {
+    NestElement *leftNearestCenters = [self nearestLeftCenter:centerX];
+    NSInteger leftCenterIndex = leftNearestCenters.nearestElementIndex;
+    CGFloat leftCenter = leftNearestCenters.minimumDistance;
+    NestElement *rightNearestCenters = [self nearestRightCenter:centerX];
+    NSInteger rightCenterIndex = rightNearestCenters.nearestElementIndex;
+    CGFloat rightCenter = rightNearestCenters.minimumDistance;
+    NSInteger nearestItemIndex  = NSIntegerMax;
+    switch (direction)  {
+    case NearestPointDirectionAny:
+        if (leftCenter > rightCenter) {
+            nearestItemIndex = rightCenterIndex;
+        } else {
+            nearestItemIndex = leftCenterIndex;
+        }
+    case NearestPointDirectionLeft:
+            nearestItemIndex = leftCenterIndex;
+    case NearestPointDirectionRight:
+            nearestItemIndex = rightCenterIndex;
+    }
     
+    self.selectedItem = nearestItemIndex;
+    return CGPointMake((CGFloat)(nearestItemIndex) * self.cellSize.normalWidth, 0);
 }
 
 /** 最左边元素*/
@@ -148,12 +149,16 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
     return 1;
 }
 
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.items.count;
+}
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.delegate && [self.delegate respondsToSelector:@selector(CardSlideView:cellForItemAtIndexPath:)]) {
         [self.delegate CardSlideView:self cellForItemAtIndexPath:indexPath];
     }
     HBCardSlideCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HBCardSlideCell" forIndexPath:indexPath];
-    cell.model = self.items[indexPath.row];
+    cell.item = self.items[indexPath.row];
     if (cell.SelectedCallBack) {
         __weak typeof(self) weakSelf = self;
         cell.SelectedCallBack = ^(id  _Nonnull object) {
@@ -168,12 +173,16 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     [self scrollViewWillBeginDragging:collectionView];
     self.selectedItem = indexPath.item;
-    
-    
+    HBCardCollectionViewLayout *layout = [[HBCardCollectionViewLayout alloc] init];
+    CGFloat x = (CGFloat)(self.selectedItem) * self.cellSize.normalWidth;
+    layout.ignoringBoundsChange = YES;
+    [collectionView setContentOffset:CGPointMake(x, 0) animated:YES];
+    layout.ignoringBoundsChange = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self performSelector:@selector(scrollViewDidEndDragging:) withObject:collectionView afterDelay:0.3];
+    });
+
 }
 
-/** numberOfItemsInSection*/
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.items.count;
-}
+
 @end

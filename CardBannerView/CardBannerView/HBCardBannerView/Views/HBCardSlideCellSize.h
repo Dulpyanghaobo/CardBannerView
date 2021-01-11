@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HBCardSlideCellSize : NSObject
@@ -19,6 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)CGFloat centerHeight;
 
+- (instancetype)initWithNormal:(CGFloat)normalWidth center:(CGFloat)centerWidth;
+
+- (instancetype)initWithNormal:(CGFloat)normalWidth center:(CGFloat)centerWidth normalHeight:(CGFloat)normalHeight centerHeight:(CGFloat)centerHeight;
 
 @end
 

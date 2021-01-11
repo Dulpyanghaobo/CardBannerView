@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) NSObject<HBCardSliderModelProtocol> *model;
 
+@property (nonatomic, strong) UILabel *titleLabel;
+
+@property (nonatomic, strong) NSString *item;
+
 @property (nonatomic, strong) void (^SelectedCallBack)(id object);
 
 @end

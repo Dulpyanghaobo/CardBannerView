@@ -20,23 +20,19 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface NestElement : NSObject
-
-@property (nonatomic, assign)NSInteger nearestElementIndex;
-
-@property (nonatomic, assign)CGFloat minimumDistance;
-
-@end
-
-
-@interface HBCardSlideDataSource : NSObject
+@interface HBCardSlideDataSource : NSObject<UICollectionViewDelegate,UICollectionViewDataSource>
 
 @property (nonatomic, strong) HBCardSlideCellSize *cellSize;
 /** */
 @property (nonatomic, weak) UICollectionView *collectionView;
 
+/** 选择*/
+@property (nonatomic, weak) id <HBCardSlideDataDelegate>delegate;
 
 @property (nonatomic, strong) void (^SelectedCallBack)(id object);
+/** 模型*/
+@property (nonatomic, strong) NSArray *items;
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView cardSlideCellSize:(HBCardSlideCellSize *)cellSize;
 @end
 
 
