@@ -6,7 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HBCardSlideCellSize.h"
 NS_ASSUME_NONNULL_BEGIN
 @class HBCardSlideDataSource;
 @protocol HBCardSlideDataDelegate <NSObject>
@@ -28,17 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface HBCardSlideCellSize : NSObject
-
-@property (nonatomic, assign)CGFloat normalWidth;
-
-@property (nonatomic, assign)CGFloat centerWidth;
-
-@property (nonatomic, assign)CGFloat normalHeight;
-
-@property (nonatomic, assign)CGFloat centerHeight;
-
-@end
 
 @interface HBCardSlideDataSource : NSObject
 

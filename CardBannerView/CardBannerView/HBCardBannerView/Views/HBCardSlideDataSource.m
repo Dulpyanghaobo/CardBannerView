@@ -138,8 +138,8 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
     NSInteger nearestRightElementIndex = (centerX - self.collectionViewCenter - self.cellSize.centerWidth + self.cellSize.normalWidth)/self.cellSize.normalWidth;
     CGFloat minimumRightDistance = centerX - nearestRightElementIndex * self.cellSize.normalWidth - self.collectionViewCenter - self.cellSize.centerWidth + self.cellSize.normalWidth;
     NestElement *nearElement = [NestElement new];
-    nearElement.nearestElementIndex = nearestLeftElementIndex;
-    nearElement.minimumDistance = minimumLeftDistance;
+    nearElement.nearestElementIndex = nearestRightElementIndex;
+    nearElement.minimumDistance = minimumRightDistance;
     return nearElement;
 }
 
@@ -164,6 +164,13 @@ typedef NS_ENUM(NSInteger, NearestPointDirection) {
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    [self scrollViewWillBeginDragging:collectionView];
+    self.selectedItem = indexPath.item;
+    
+    
+}
 
 /** numberOfItemsInSection*/
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {

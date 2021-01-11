@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048AFED025AC52DB009E9BB2 /* HBCardCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 048AFECF25AC52DB009E9BB2 /* HBCardCollectionViewLayout.m */; };
+		048AFED425AC53F6009E9BB2 /* HBCardSlideCellSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 048AFED325AC53F6009E9BB2 /* HBCardSlideCellSize.m */; };
 		0496C91425A3042000CC56D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496C91325A3042000CC56D3 /* AppDelegate.m */; };
 		0496C91725A3042000CC56D3 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496C91625A3042000CC56D3 /* SceneDelegate.m */; };
 		0496C91A25A3042000CC56D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0496C91925A3042000CC56D3 /* ViewController.m */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		048AFECE25AC52DB009E9BB2 /* HBCardCollectionViewLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBCardCollectionViewLayout.h; sourceTree = "<group>"; };
+		048AFECF25AC52DB009E9BB2 /* HBCardCollectionViewLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBCardCollectionViewLayout.m; sourceTree = "<group>"; };
+		048AFED225AC53F6009E9BB2 /* HBCardSlideCellSize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HBCardSlideCellSize.h; sourceTree = "<group>"; };
+		048AFED325AC53F6009E9BB2 /* HBCardSlideCellSize.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBCardSlideCellSize.m; sourceTree = "<group>"; };
 		0496C90F25A3041F00CC56D3 /* CardBannerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBannerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0496C91225A3042000CC56D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0496C91325A3042000CC56D3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +114,10 @@
 				0496C97325A3FCE000CC56D3 /* HBCardSlideDataSource.m */,
 				0496C97625A43E4500CC56D3 /* HBCardSlideCell.h */,
 				0496C97725A43E4500CC56D3 /* HBCardSlideCell.m */,
+				048AFECE25AC52DB009E9BB2 /* HBCardCollectionViewLayout.h */,
+				048AFECF25AC52DB009E9BB2 /* HBCardCollectionViewLayout.m */,
+				048AFED225AC53F6009E9BB2 /* HBCardSlideCellSize.h */,
+				048AFED325AC53F6009E9BB2 /* HBCardSlideCellSize.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,11 +198,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048AFED025AC52DB009E9BB2 /* HBCardCollectionViewLayout.m in Sources */,
 				0496C97425A3FCE000CC56D3 /* HBCardSlideDataSource.m in Sources */,
 				0496C97825A43E4500CC56D3 /* HBCardSlideCell.m in Sources */,
 				0496C91A25A3042000CC56D3 /* ViewController.m in Sources */,
 				0496C91425A3042000CC56D3 /* AppDelegate.m in Sources */,
 				0496C92525A3042100CC56D3 /* main.m in Sources */,
+				048AFED425AC53F6009E9BB2 /* HBCardSlideCellSize.m in Sources */,
 				0496C91725A3042000CC56D3 /* SceneDelegate.m in Sources */,
 				0496C95F25A3187E00CC56D3 /* HBCardBannerView.m in Sources */,
 			);
